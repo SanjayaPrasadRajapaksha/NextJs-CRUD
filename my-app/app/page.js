@@ -1,12 +1,39 @@
+"use client"
 import Todo from "@/Components/Todo";
-import Image from "next/image";
+import { ToastContainer, toast } from 'react-toastify';
+import { useState } from "react";
 
 export default function Home() {
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFormData(form => ({ ...form, [name]: value }));
+    console.log(formData)
+  }
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+
+
+      toast.success("Success");
+    } catch (error) {
+      toast.error("Error")
+    }
+  }
   return (
     <>
-      <form className="relative overflow-x-auto mt-24 w-[60%] mx-auto">
-        <input type="text" name="title" placeholder="Enter Title" className="px-3 py-2 border-2 w-full" />
-        <textarea name="description" placeholder="Enter Description" className="px-3 py-2 border-2 w-full" ></textarea>
+      <ToastContainer theme="dark" />
+      <form onSubmit={onSubmitHandler} className="relative overflow-x-auto mt-24 w-[60%] mx-auto">
+        <input value={formData.title} onChange={onChangeHandler} type="text" name="title" placeholder="Enter Title" className="px-3 py-2 border-2 w-full" />
+        <textarea onChange={onChangeHandler} name="description" placeholder="Enter Description" className="px-3 py-2 border-2 w-full" />
         <button type="submit" className="bg-orange-600 py-3 px-11">Add Todo</button>
       </form>
 
